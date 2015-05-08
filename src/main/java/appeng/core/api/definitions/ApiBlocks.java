@@ -21,8 +21,6 @@ package appeng.core.api.definitions;
 
 import java.util.Set;
 
-import com.google.common.collect.ImmutableSet;
-
 import appeng.api.definitions.IBlockDefinition;
 import appeng.api.definitions.IBlocks;
 import appeng.api.definitions.ITileDefinition;
@@ -55,6 +53,14 @@ import appeng.block.networking.BlockEnergyCell;
 import appeng.block.networking.BlockWireless;
 import appeng.block.qnb.BlockQuantumLinkChamber;
 import appeng.block.qnb.BlockQuantumRing;
+import appeng.block.slab.ChiseledQuartzSlabBlock;
+import appeng.block.slab.FluixSlabBlock;
+import appeng.block.slab.QuartzPillarSlabBlock;
+import appeng.block.slab.QuartzSlabBlock;
+import appeng.block.slab.SkyStoneBlockSlabBlock;
+import appeng.block.slab.SkyStoneBrickSlabBlock;
+import appeng.block.slab.SkyStoneSlabBlock;
+import appeng.block.slab.SkyStoneSmallBrickSlabBlock;
 import appeng.block.solids.BlockFluix;
 import appeng.block.solids.BlockQuartz;
 import appeng.block.solids.BlockQuartzChiseled;
@@ -84,6 +90,8 @@ import appeng.debug.BlockChunkloader;
 import appeng.debug.BlockCubeGenerator;
 import appeng.debug.BlockItemGen;
 import appeng.debug.BlockPhantomNode;
+
+import com.google.common.collect.ImmutableSet;
 
 
 /**
@@ -147,6 +155,14 @@ public final class ApiBlocks implements IBlocks
 	private final IBlockDefinition quartzStair;
 	private final IBlockDefinition chiseledQuartzStair;
 	private final IBlockDefinition quartzPillarStair;
+	private final IBlockDefinition skyStoneSlab;
+	private final IBlockDefinition skyStoneBlockSlab;
+	private final IBlockDefinition skyStoneBrickSlab;
+	private final IBlockDefinition skyStoneSmallBrickSlab;
+	private final IBlockDefinition fluixSlab;
+	private final IBlockDefinition quartzSlab;
+	private final IBlockDefinition chiseledQuartzSlab;
+	private final IBlockDefinition quartzPillarSlab;
 
 	private final IBlockDefinition itemGen;
 	private final IBlockDefinition chunkLoader;
@@ -216,19 +232,22 @@ public final class ApiBlocks implements IBlocks
 		this.molecularAssembler = constructor.registerTileDefinition( new BlockMolecularAssembler() );
 		this.lightDetector = constructor.registerTileDefinition( lightDetector );
 		this.paint = constructor.registerTileDefinition( new BlockPaint() );
-
 		this.skyStoneStair = constructor.registerBlockDefinition( new SkyStoneStairBlock( skyStone, 0 ) );
 		this.skyStoneBlockStair = constructor.registerBlockDefinition( new SkyStoneBlockStairBlock( skyStone, 1 ) );
 		this.skyStoneBrickStair = constructor.registerBlockDefinition( new SkyStoneBrickStairBlock( skyStone, 2 ) );
 		this.skyStoneSmallBrickStair = constructor.registerBlockDefinition( new SkyStoneSmallBrickStairBlock( skyStone, 3 ) );
-
 		this.fluixStair = constructor.registerBlockDefinition( new FluixStairBlock( fluixBlock ) );
-
 		this.quartzStair = constructor.registerBlockDefinition( new QuartzStairBlock( quartzBlock ) );
-
 		this.chiseledQuartzStair = constructor.registerBlockDefinition( new ChiseledQuartzStairBlock( chiseldQuartz ) );
-
 		this.quartzPillarStair = constructor.registerBlockDefinition( new QuartzPillarStairBlock( quartzPillar ) );
+		this.skyStoneSlab = constructor.registerBlockDefinition( new SkyStoneSlabBlock( skyStone, 0 ) );
+		this.skyStoneBlockSlab = constructor.registerBlockDefinition( new SkyStoneBlockSlabBlock( skyStone, 1 ) );
+		this.skyStoneBrickSlab = constructor.registerBlockDefinition( new SkyStoneBrickSlabBlock( skyStone, 2 ) );
+		this.skyStoneSmallBrickSlab = constructor.registerBlockDefinition( new SkyStoneSmallBrickSlabBlock( skyStone, 3 ) );
+		this.fluixSlab = constructor.registerBlockDefinition( new FluixSlabBlock( fluixBlock ) );
+		this.quartzSlab = constructor.registerBlockDefinition( new QuartzSlabBlock( quartzBlock ) );
+		this.chiseledQuartzSlab = constructor.registerBlockDefinition( new ChiseledQuartzSlabBlock( chiseldQuartz ) );
+		this.quartzPillarSlab = constructor.registerBlockDefinition( new QuartzPillarSlabBlock( quartzPillar ) );
 
 		this.itemGen = constructor.registerBlockDefinition( new BlockItemGen() );
 		this.chunkLoader = constructor.registerBlockDefinition( new BlockChunkloader() );
@@ -361,6 +380,54 @@ public final class ApiBlocks implements IBlocks
 	{
 		return this.quartzPillarStair;
 	}
+
+	@Override
+	public IBlockDefinition skyStoneSlab()
+	{
+		return this.skyStoneSlab;
+	}
+
+//	@Override
+//	public IBlockDefinition skyStoneBlockSlab()
+//	{
+//		return this.skyStoneBlockSlab;
+//	}
+
+//	@Override
+//	public IBlockDefinition skyStoneBrickSlab()
+//	{
+//		return this.skyStoneBrickSlab;
+//	}
+//
+//	@Override
+//	public IBlockDefinition skyStoneSmallBrickSlab()
+//	{
+//		return this.skyStoneSmallBrickSlab;
+//	}
+//
+//	@Override
+//	public IBlockDefinition fluixSlab()
+//	{
+//		return this.fluixSlab;
+//	}
+//
+//	@Override
+//	public IBlockDefinition quartzSlab()
+//	{
+//		return this.quartzSlab;
+//	}
+//
+//	@Override
+//	public IBlockDefinition chiseledQuartzSlab()
+//	{
+//		return this.chiseledQuartzSlab;
+//	}
+//
+//	@Override
+//	public IBlockDefinition quartzPillarSlab()
+//	{
+//		return this.quartzPillarSlab;
+//	}
 
 	@Override
 	public ITileDefinition grindStone()
