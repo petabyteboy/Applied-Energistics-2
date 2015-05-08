@@ -232,21 +232,31 @@ public final class ApiBlocks implements IBlocks
 		this.molecularAssembler = constructor.registerTileDefinition( new BlockMolecularAssembler() );
 		this.lightDetector = constructor.registerTileDefinition( lightDetector );
 		this.paint = constructor.registerTileDefinition( new BlockPaint() );
+
 		this.skyStoneStair = constructor.registerBlockDefinition( new SkyStoneStairBlock( skyStone, 0 ) );
 		this.skyStoneBlockStair = constructor.registerBlockDefinition( new SkyStoneBlockStairBlock( skyStone, 1 ) );
 		this.skyStoneBrickStair = constructor.registerBlockDefinition( new SkyStoneBrickStairBlock( skyStone, 2 ) );
 		this.skyStoneSmallBrickStair = constructor.registerBlockDefinition( new SkyStoneSmallBrickStairBlock( skyStone, 3 ) );
+
 		this.fluixStair = constructor.registerBlockDefinition( new FluixStairBlock( fluixBlock ) );
+
 		this.quartzStair = constructor.registerBlockDefinition( new QuartzStairBlock( quartzBlock ) );
+
 		this.chiseledQuartzStair = constructor.registerBlockDefinition( new ChiseledQuartzStairBlock( chiseldQuartz ) );
+
 		this.quartzPillarStair = constructor.registerBlockDefinition( new QuartzPillarStairBlock( quartzPillar ) );
+
 		this.skyStoneSlab = constructor.registerBlockDefinition( new SkyStoneSlabBlock( skyStone, 0 ) );
 		this.skyStoneBlockSlab = constructor.registerBlockDefinition( new SkyStoneBlockSlabBlock( skyStone, 1 ) );
 		this.skyStoneBrickSlab = constructor.registerBlockDefinition( new SkyStoneBrickSlabBlock( skyStone, 2 ) );
 		this.skyStoneSmallBrickSlab = constructor.registerBlockDefinition( new SkyStoneSmallBrickSlabBlock( skyStone, 3 ) );
+
 		this.fluixSlab = constructor.registerBlockDefinition( new FluixSlabBlock( fluixBlock ) );
+
 		this.quartzSlab = constructor.registerBlockDefinition( new QuartzSlabBlock( quartzBlock ) );
+
 		this.chiseledQuartzSlab = constructor.registerBlockDefinition( new ChiseledQuartzSlabBlock( chiseldQuartz ) );
+
 		this.quartzPillarSlab = constructor.registerBlockDefinition( new QuartzPillarSlabBlock( quartzPillar ) );
 
 		this.itemGen = constructor.registerBlockDefinition( new BlockItemGen() );
