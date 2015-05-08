@@ -19,40 +19,34 @@
 package appeng.block;
 
 
-import java.lang.reflect.Field;
 import java.util.EnumSet;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
-import net.minecraft.block.Block.SoundType;
-import net.minecraft.creativetab.CreativeTabs;
-import appeng.api.AEApi;
-import appeng.core.AppEng;
+import net.minecraft.util.IIcon;
 import appeng.core.features.AEFeature;
 import appeng.core.features.IAEFeature;
 import appeng.core.features.IFeatureHandler;
 import appeng.core.features.SlabBlockFeatureHandler;
-import appeng.transformer.AppEngCore;
+import appeng.util.Platform;
 
 import com.google.common.base.Optional;
-
-import cpw.mods.fml.relauncher.ReflectionHelper;
 
 
 public abstract class AEBaseSlabBlock extends BlockSlab implements IAEFeature
 {
 	private final IFeatureHandler features;
 	public AEBaseBlock block;
+	public int meta;
 
 	protected AEBaseSlabBlock( AEBaseBlock block, int meta, EnumSet<AEFeature> features )
 	{
         super( true, block.getMaterial());
 		this.features = new SlabBlockFeatureHandler( features, this, Optional.<String>absent() );
-
-        this.setHardness( this.block.getBlockHardness(null, 0, 0, 0) );
-        this.setResistance( this.block.getExplosionResistance(null) * 5.0F / 3.0F );
-        this.setStepSound( this.block.stepSound );
-		this.setBlockTextureName( this.block.getTextureName() );
+		this.block = block;
+		this.meta = meta;
+        this.setHardness( block.getBlockHardness(null, 0, 0, 0) );
+        this.setResistance( block.getExplosionResistance(null) * 5.0F / 3.0F );
+        this.setStepSound( block.stepSound );
 	}
 
 	@Override
@@ -65,6 +59,12 @@ public abstract class AEBaseSlabBlock extends BlockSlab implements IAEFeature
 	public void postInit()
 	{
 		// Override to do stuff
+	}
+
+	@Override
+	public IIcon getIcon(int dir, int meta)
+	{
+		return block.getIcon( dir, this.meta );
 	}
 
 	@Override
