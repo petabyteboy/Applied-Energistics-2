@@ -48,7 +48,11 @@ public abstract class AEBaseSlabBlock extends BlockSlab implements IAEFeature
 	{
         super( true, block.getMaterial());
 		this.features = new SlabBlockFeatureHandler( features, this, Optional.<String>absent() );
-		this.block = block;
+
+        this.setHardness( this.block.getBlockHardness(null, 0, 0, 0) );
+        this.setResistance( this.block.getExplosionResistance(null) * 5.0F / 3.0F );
+        this.setStepSound( this.block.stepSound );
+		this.setBlockTextureName( this.block.getTextureName() );
 	}
 
 	@Override

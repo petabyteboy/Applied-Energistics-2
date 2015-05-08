@@ -67,15 +67,7 @@ public class SlabBlockFeatureHandler implements IFeatureHandler
 		{
 			String slabName = this.extractor.get();
 
-	        this.slabs.setHardness( this.slabs.block.getBlockHardness(null, 0, 0, 0) );
-	        this.slabs.setResistance( this.slabs.block.getExplosionResistance(null) * 5.0F / 3.0F );
-	        this.slabs.setStepSound( this.slabs.block.stepSound );
-
 			this.slabs.setBlockName( "appliedenergistics2." + slabName );
-			this.slabs.setBlockTextureName( this.slabs.block.getTextureName() );
-
-			this.slabs.setLightOpacity( 0 );
-
 			this.slabs.setCreativeTab( CreativeTab.instance );
 			GameRegistry.registerBlock( this.slabs, "tile." + slabName );
 		}
