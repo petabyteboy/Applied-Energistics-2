@@ -40,7 +40,7 @@ public abstract class AEBaseSlabBlock extends BlockSlab implements IAEFeature
 
 	protected AEBaseSlabBlock( AEBaseBlock block, int meta, EnumSet<AEFeature> features )
 	{
-        super( true, block.getMaterial());
+        super( false, block.getMaterial());
 		this.features = new SlabBlockFeatureHandler( features, this, Optional.<String>absent() );
 		this.block = block;
 		this.meta = meta;

@@ -397,47 +397,47 @@ public final class ApiBlocks implements IBlocks
 		return this.skyStoneSlab;
 	}
 
-//	@Override
-//	public IBlockDefinition skyStoneBlockSlab()
-//	{
-//		return this.skyStoneBlockSlab;
-//	}
+	@Override
+	public IBlockDefinition skyStoneBlockSlab()
+	{
+		return this.skyStoneBlockSlab;
+	}
 
-//	@Override
-//	public IBlockDefinition skyStoneBrickSlab()
-//	{
-//		return this.skyStoneBrickSlab;
-//	}
-//
-//	@Override
-//	public IBlockDefinition skyStoneSmallBrickSlab()
-//	{
-//		return this.skyStoneSmallBrickSlab;
-//	}
-//
-//	@Override
-//	public IBlockDefinition fluixSlab()
-//	{
-//		return this.fluixSlab;
-//	}
-//
-//	@Override
-//	public IBlockDefinition quartzSlab()
-//	{
-//		return this.quartzSlab;
-//	}
-//
-//	@Override
-//	public IBlockDefinition chiseledQuartzSlab()
-//	{
-//		return this.chiseledQuartzSlab;
-//	}
-//
-//	@Override
-//	public IBlockDefinition quartzPillarSlab()
-//	{
-//		return this.quartzPillarSlab;
-//	}
+	@Override
+	public IBlockDefinition skyStoneBrickSlab()
+	{
+		return this.skyStoneBrickSlab;
+	}
+
+	@Override
+	public IBlockDefinition skyStoneSmallBrickSlab()
+	{
+		return this.skyStoneSmallBrickSlab;
+	}
+
+	@Override
+	public IBlockDefinition fluixSlab()
+	{
+		return this.fluixSlab;
+	}
+
+	@Override
+	public IBlockDefinition quartzSlab()
+	{
+		return this.quartzSlab;
+	}
+
+	@Override
+	public IBlockDefinition chiseledQuartzSlab()
+	{
+		return this.chiseledQuartzSlab;
+	}
+
+	@Override
+	public IBlockDefinition quartzPillarSlab()
+	{
+		return this.quartzPillarSlab;
+	}
 
 	@Override
 	public ITileDefinition grindStone()

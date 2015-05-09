@@ -19,14 +19,17 @@
 package appeng.core.api.definitions;
 
 
+import appeng.api.AEApi;
 import appeng.api.definitions.IItemDefinition;
 import appeng.api.definitions.IItems;
 import appeng.api.util.AEColoredItemDefinition;
+import appeng.block.AEBaseSlabBlock;
 import appeng.core.features.AEFeature;
 import appeng.debug.ToolDebugCard;
 import appeng.debug.ToolEraser;
 import appeng.debug.ToolMeteoritePlacer;
 import appeng.debug.ToolReplicatorCard;
+import appeng.items.AEItemSlab;
 import appeng.items.materials.MaterialType;
 import appeng.items.misc.ItemCrystalSeed;
 import appeng.items.misc.ItemEncodedPattern;
@@ -98,6 +101,7 @@ public final class ApiItems implements IItems
 
 	private final IItemDefinition facade;
 	private final IItemDefinition crystalSeed;
+//	private final IItemDefinition fluixSlab;
 
 	// rv1
 	private final IItemDefinition encodedPattern;
@@ -154,6 +158,7 @@ public final class ApiItems implements IItems
 
 		this.facade = constructor.registerItemDefinition( new ItemFacade() );
 		this.crystalSeed = constructor.registerItemDefinition( new ItemCrystalSeed() );
+//		this.fluixSlab = constructor.registerItemDefinition( new AEItemSlab((AEBaseSlabBlock) AEApi.instance().definitions().blocks().fluixSlab().maybeBlock().get()) );
 
 		// rv1
 		this.encodedPattern = constructor.registerItemDefinition( new ItemEncodedPattern() );
