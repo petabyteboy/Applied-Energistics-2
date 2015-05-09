@@ -930,8 +930,4 @@ public class AEBaseBlock extends BlockContainer implements IAEFeature
 	{
 		return this.hasSubtypes;
 	}
-
-	public String getTextureName() {
-		return textureName;
-	}
 }

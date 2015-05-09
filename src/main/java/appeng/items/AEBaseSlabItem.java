@@ -15,15 +15,16 @@ import appeng.core.features.ItemFeatureHandler;
 
 import com.google.common.base.Optional;
 
-public class AEItemSlab extends ItemSlab implements IAEFeature {
-	
+public class AEBaseSlabItem extends ItemSlab implements IAEFeature {
+
 	private final String fullName;
 	private final Optional<String> subName;
 	private IFeatureHandler feature;
 	private AEBaseSlabBlock slab;
-	
-	public AEItemSlab(AEBaseSlabBlock slab) {
-		super(slab, slab, slab, false);
+
+	public AEBaseSlabItem(AEBaseSlabBlock slab)
+	{
+		super( slab, slab, slab, false );
 		this.slab = slab;
 		this.subName = Optional.<String>absent();
 		this.fullName = new FeatureNameExtractor( this.field_150939_a.getClass(), subName ).get();
@@ -63,5 +64,4 @@ public class AEItemSlab extends ItemSlab implements IAEFeature {
 	{
 		super.addInformation( stack, player, lines, displayMoreInfo );
 	}
-
 }

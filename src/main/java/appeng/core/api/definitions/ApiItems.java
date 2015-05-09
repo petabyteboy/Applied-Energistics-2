@@ -19,17 +19,14 @@
 package appeng.core.api.definitions;
 
 
-import appeng.api.AEApi;
 import appeng.api.definitions.IItemDefinition;
 import appeng.api.definitions.IItems;
 import appeng.api.util.AEColoredItemDefinition;
-import appeng.block.AEBaseSlabBlock;
 import appeng.core.features.AEFeature;
 import appeng.debug.ToolDebugCard;
 import appeng.debug.ToolEraser;
 import appeng.debug.ToolMeteoritePlacer;
 import appeng.debug.ToolReplicatorCard;
-import appeng.items.AEItemSlab;
 import appeng.items.materials.MaterialType;
 import appeng.items.misc.ItemCrystalSeed;
 import appeng.items.misc.ItemEncodedPattern;

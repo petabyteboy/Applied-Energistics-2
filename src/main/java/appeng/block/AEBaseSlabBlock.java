@@ -27,7 +27,6 @@ import appeng.core.features.AEFeature;
 import appeng.core.features.IAEFeature;
 import appeng.core.features.IFeatureHandler;
 import appeng.core.features.SlabBlockFeatureHandler;
-import appeng.util.Platform;
 
 import com.google.common.base.Optional;
 
@@ -40,13 +39,14 @@ public abstract class AEBaseSlabBlock extends BlockSlab implements IAEFeature
 
 	protected AEBaseSlabBlock( AEBaseBlock block, int meta, EnumSet<AEFeature> features )
 	{
-        super( false, block.getMaterial());
+        super( false, block.getMaterial() );
 		this.features = new SlabBlockFeatureHandler( features, this, Optional.<String>absent() );
 		this.block = block;
 		this.meta = meta;
-        this.setHardness( block.getBlockHardness(null, 0, 0, 0) );
-        this.setResistance( block.getExplosionResistance(null) * 5.0F / 3.0F );
+        this.setHardness( block.getBlockHardness( null, 0, 0, 0 ) );
+        this.setResistance( block.getExplosionResistance( null ) * 5.0F / 3.0F );
         this.setStepSound( block.stepSound );
+		this.setLightOpacity( 0 );
 	}
 
 	@Override
@@ -70,6 +70,6 @@ public abstract class AEBaseSlabBlock extends BlockSlab implements IAEFeature
 	@Override
 	public String func_150002_b(int p_150002_1_)
 	{
-		return "";
-	};
+		return this.getUnlocalizedName();
+	}
 }
