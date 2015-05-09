@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.WeakHashMap;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -151,7 +152,7 @@ import appeng.util.prioitylist.IPartitionList;
 public class Platform
 {
 
-	public static final Block AIR = Blocks.air;
+	public static final Block AIR_BLOCK = Blocks.air;
 
 	public static final int DEF_OFFSET = 16;
 
@@ -191,7 +192,7 @@ public class Platform
 		p = PowerUnits.AE.convertTo( displayUnits, p );
 
 		int offset = 0;
-		String Lvl = "";
+		String level = "";
 		String[] preFixes = new String[] { "k", "M", "G", "T", "P", "T", "P", "E", "Z", "Y" };
 		String unitName = displayUnits.name();
 
@@ -208,12 +209,12 @@ public class Platform
 		while( p > 1000 && offset < preFixes.length )
 		{
 			p /= 1000;
-			Lvl = preFixes[offset];
+			level = preFixes[offset];
 			offset++;
 		}
 
 		DecimalFormat df = new DecimalFormat( "#.##" );
-		return df.format( p ) + ' ' + Lvl + unitName + ( isRate ? "/t" : "" );
+		return df.format( p ) + ' ' + level + unitName + ( isRate ? "/t" : "" );
 	}
 
 	public static ForgeDirection crossProduct( ForgeDirection forward, ForgeDirection up )
@@ -243,7 +244,7 @@ public class Platform
 		return ForgeDirection.UNKNOWN;
 	}
 
-	public static <T extends Enum> T rotateEnum( T ce, boolean backwards, EnumSet ValidOptions )
+	public static <T extends Enum> T rotateEnum( T ce, boolean backwards, EnumSet validOptions )
 	{
 		do
 		{
@@ -256,7 +257,7 @@ public class Platform
 				ce = nextEnum( ce );
 			}
 		}
-		while( !ValidOptions.contains( ce ) || isNotValidSetting( ce ) );
+		while( !validOptions.contains( ce ) || isNotValidSetting( ce ) );
 
 		return ce;
 	}
@@ -364,7 +365,7 @@ public class Platform
 		{
 			if( tile == null && type.getType() == GuiHostType.ITEM )
 			{
-				p.openGui( AppEng.instance, type.ordinal() << 4 | ( 0 << 3 ), p.getEntityWorld(), p.inventory.currentItem, 0, 0 );
+				p.openGui( AppEng.instance, type.ordinal() << 4, p.getEntityWorld(), p.inventory.currentItem, 0, 0 );
 			}
 			else if( tile == null || type.getType() == GuiHostType.ITEM )
 			{
@@ -455,18 +456,18 @@ public class Platform
 	 * then the vanilla version which likes to fail when NBT Compound data changes order, it is pretty expensive
 	 * performance wise, so try an use shared tag compounds as long as the system remains in AE.
 	 */
-	public static boolean NBTEqualityTest( NBTBase A, NBTBase B )
+	public static boolean NBTEqualityTest( NBTBase left, NBTBase right )
 	{
 		// same type?
-		byte id = A.getId();
-		if( id == B.getId() )
+		byte id = left.getId();
+		if( id == right.getId() )
 		{
 			switch( id )
 			{
 				case 10:
 				{
-					NBTTagCompound ctA = (NBTTagCompound) A;
-					NBTTagCompound ctB = (NBTTagCompound) B;
+					NBTTagCompound ctA = (NBTTagCompound) left;
+					NBTTagCompound ctB = (NBTTagCompound) right;
 
 					Set<String> cA = ctA.func_150296_c();
 					Set<String> cB = ctB.func_150296_c();
@@ -496,8 +497,8 @@ public class Platform
 
 				case 9: // ) // A instanceof NBTTagList )
 				{
-					NBTTagList lA = (NBTTagList) A;
-					NBTTagList lB = (NBTTagList) B;
+					NBTTagList lA = (NBTTagList) left;
+					NBTTagList lB = (NBTTagList) right;
 					if( lA.tagCount() != lB.tagCount() )
 					{
 						return false;
@@ -527,25 +528,25 @@ public class Platform
 				}
 
 				case 1: // ( A instanceof NBTTagByte )
-					return ( (NBTTagByte) A ).func_150287_d() == ( (NBTTagByte) B ).func_150287_d();
+					return ( (NBTBase.NBTPrimitive) left ).func_150287_d() == ( (NBTBase.NBTPrimitive) right ).func_150287_d();
 
 				case 4: // else if ( A instanceof NBTTagLong )
-					return ( (NBTTagLong) A ).func_150291_c() == ( (NBTTagLong) B ).func_150291_c();
+					return ( (NBTBase.NBTPrimitive) left ).func_150291_c() == ( (NBTBase.NBTPrimitive) right ).func_150291_c();
 
 				case 8: // else if ( A instanceof NBTTagString )
-					return ( (NBTTagString) A ).func_150285_a_().equals( ( (NBTTagString) B ).func_150285_a_() ) || ( (NBTTagString) A ).func_150285_a_().equals( ( (NBTTagString) B ).func_150285_a_() );
+					return ( (NBTTagString) left ).func_150285_a_().equals( ( (NBTTagString) right ).func_150285_a_() ) || ( (NBTTagString) left ).func_150285_a_().equals( ( (NBTTagString) right ).func_150285_a_() );
 
 				case 6: // else if ( A instanceof NBTTagDouble )
-					return ( (NBTTagDouble) A ).func_150286_g() == ( (NBTTagDouble) B ).func_150286_g();
+					return ( (NBTBase.NBTPrimitive) left ).func_150286_g() == ( (NBTBase.NBTPrimitive) right ).func_150286_g();
 
 				case 5: // else if ( A instanceof NBTTagFloat )
-					return ( (NBTTagFloat) A ).func_150288_h() == ( (NBTTagFloat) B ).func_150288_h();
+					return ( (NBTBase.NBTPrimitive) left ).func_150288_h() == ( (NBTBase.NBTPrimitive) right ).func_150288_h();
 
 				case 3: // else if ( A instanceof NBTTagInt )
-					return ( (NBTTagInt) A ).func_150287_d() == ( (NBTTagInt) B ).func_150287_d();
+					return ( (NBTBase.NBTPrimitive) left ).func_150287_d() == ( (NBTBase.NBTPrimitive) right ).func_150287_d();
 
 				default:
-					return A.equals( B );
+					return left.equals( right );
 			}
 		}
 
@@ -591,17 +592,17 @@ public class Platform
 	 * Orderless hash on NBT Data, used to work thought huge piles fast, but ignores the order just in case MC decided
 	 * to change it... WHICH IS BAD...
 	 */
-	public static int NBTOrderlessHash( NBTBase A )
+	public static int NBTOrderlessHash( NBTBase nbt )
 	{
 		// same type?
 		int hash = 0;
-		byte id = A.getId();
+		byte id = nbt.getId();
 		hash += id;
 		switch( id )
 		{
 			case 10:
 			{
-				NBTTagCompound ctA = (NBTTagCompound) A;
+				NBTTagCompound ctA = (NBTTagCompound) nbt;
 
 				Set<String> cA = ctA.func_150296_c();
 
@@ -615,7 +616,7 @@ public class Platform
 
 			case 9: // ) // A instanceof NBTTagList )
 			{
-				NBTTagList lA = (NBTTagList) A;
+				NBTTagList lA = (NBTTagList) nbt;
 				hash += 9 * lA.tagCount();
 
 				List<NBTBase> l = tagList( lA );
@@ -628,22 +629,22 @@ public class Platform
 			}
 
 			case 1: // ( A instanceof NBTTagByte )
-				return hash + ( (NBTTagByte) A ).func_150290_f();
+				return hash + ( (NBTBase.NBTPrimitive) nbt ).func_150290_f();
 
 			case 4: // else if ( A instanceof NBTTagLong )
-				return hash + (int) ( (NBTTagLong) A ).func_150291_c();
+				return hash + (int) ( (NBTBase.NBTPrimitive) nbt ).func_150291_c();
 
 			case 8: // else if ( A instanceof NBTTagString )
-				return hash + ( (NBTTagString) A ).func_150285_a_().hashCode();
+				return hash + ( (NBTTagString) nbt ).func_150285_a_().hashCode();
 
 			case 6: // else if ( A instanceof NBTTagDouble )
-				return hash + (int) ( (NBTTagDouble) A ).func_150286_g();
+				return hash + (int) ( (NBTBase.NBTPrimitive) nbt ).func_150286_g();
 
 			case 5: // else if ( A instanceof NBTTagFloat )
-				return hash + (int) ( (NBTTagFloat) A ).func_150288_h();
+				return hash + (int) ( (NBTBase.NBTPrimitive) nbt ).func_150288_h();
 
 			case 3: // else if ( A instanceof NBTTagInt )
-				return hash + ( (NBTTagInt) A ).func_150287_d();
+				return hash + ( (NBTBase.NBTPrimitive) nbt ).func_150287_d();
 
 			default:
 				return hash;
@@ -653,14 +654,14 @@ public class Platform
 	/*
 	 * The usual version of this returns an ItemStack, this version returns the recipe.
 	 */
-	public static IRecipe findMatchingRecipe( InventoryCrafting par1InventoryCrafting, World par2World )
+	public static IRecipe findMatchingRecipe( InventoryCrafting inventoryCrafting, World par2World )
 	{
 		CraftingManager cm = CraftingManager.getInstance();
 		List<IRecipe> rl = cm.getRecipeList();
 
 		for( IRecipe r : rl )
 		{
-			if( r.matches( par1InventoryCrafting, par2World ) )
+			if( r.matches( inventoryCrafting, par2World ) )
 			{
 				return r;
 			}
@@ -855,7 +856,7 @@ public class Platform
 			return teA;
 		}
 
-		return new InventoryLargeChest( "", teA, (TileEntityChest) teB );
+		return new InventoryLargeChest( "", teA, (IInventory) teB );
 	}
 
 	public static boolean isModLoaded( String modid )
@@ -991,7 +992,7 @@ public class Platform
 	{
 		if( AESharedNBT.isShared( willAdd.getTagCompound() ) )
 		{
-			if( ( (AESharedNBT) willAdd.getTagCompound() ).getSpecialComparison() != null )
+			if( ( (IAETagCompound) willAdd.getTagCompound() ).getSpecialComparison() != null )
 			{
 				return true;
 			}
@@ -1236,7 +1237,7 @@ public class Platform
 		return isSameItem( is, filter ) && sameStackStags( is, filter );
 	}
 
-	public static boolean isSameItemFuzzy( ItemStack a, ItemStack b, FuzzyMode Mode )
+	public static boolean isSameItemFuzzy( ItemStack a, ItemStack b, FuzzyMode mode )
 	{
 		if( a == null && b == null )
 		{
@@ -1263,38 +1264,38 @@ public class Platform
 		{
 			try
 			{
-				if( Mode == FuzzyMode.IGNORE_ALL )
+				if( mode == FuzzyMode.IGNORE_ALL )
 				{
 					return true;
 				}
-				else if( Mode == FuzzyMode.PERCENT_99 )
+				else if( mode == FuzzyMode.PERCENT_99 )
 				{
 					return ( a.getItemDamageForDisplay() > 1 ) == ( b.getItemDamageForDisplay() > 1 );
 				}
 				else
 				{
-					float APercentDamaged = 1.0f - (float) a.getItemDamageForDisplay() / (float) a.getMaxDamage();
-					float BPercentDamaged = 1.0f - (float) b.getItemDamageForDisplay() / (float) b.getMaxDamage();
+					float percentDamagedOfA = 1.0f - (float) a.getItemDamageForDisplay() / (float) a.getMaxDamage();
+					float percentDamagedOfB = 1.0f - (float) b.getItemDamageForDisplay() / (float) b.getMaxDamage();
 
-					return ( APercentDamaged > Mode.breakPoint ) == ( BPercentDamaged > Mode.breakPoint );
+					return ( percentDamagedOfA > mode.breakPoint ) == ( percentDamagedOfB > mode.breakPoint );
 				}
 			}
 			catch( Throwable e )
 			{
-				if( Mode == FuzzyMode.IGNORE_ALL )
+				if( mode == FuzzyMode.IGNORE_ALL )
 				{
 					return true;
 				}
-				else if( Mode == FuzzyMode.PERCENT_99 )
+				else if( mode == FuzzyMode.PERCENT_99 )
 				{
 					return ( a.getItemDamage() > 1 ) == ( b.getItemDamage() > 1 );
 				}
 				else
 				{
-					float APercentDamaged = (float) a.getItemDamage() / (float) a.getMaxDamage();
-					float BPercentDamaged = (float) b.getItemDamage() / (float) b.getMaxDamage();
+					float percentDamagedOfA = (float) a.getItemDamage() / (float) a.getMaxDamage();
+					float percentDamagedOfB = (float) b.getItemDamage() / (float) b.getMaxDamage();
 
-					return ( APercentDamaged > Mode.breakPoint ) == ( BPercentDamaged > Mode.breakPoint );
+					return ( percentDamagedOfA > mode.breakPoint ) == ( percentDamagedOfB > mode.breakPoint );
 				}
 			}
 		}
@@ -1649,9 +1650,9 @@ public class Platform
 						return 0;
 					}
 
-					for( Integer Side : sides )
+					for( int side : sides )
 					{
-						int c = ( Side << ( offset % 8 ) ) ^ ( 1 << dir.ordinal() );
+						int c = ( side << ( offset % 8 ) ) ^ ( 1 << dir.ordinal() );
 						offset++;
 						hash = c + ( hash << 6 ) + ( hash << 16 ) - hash;
 					}

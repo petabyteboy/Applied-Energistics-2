@@ -194,13 +194,13 @@ public class TileCableBus extends AEBaseTile implements AEMultiTile, ICustomColl
 	}
 
 	@Override
-	public void getDrops( World w, int x, int y, int z, ArrayList drops )
+	public void getDrops( World w, int x, int y, int z, List drops )
 	{
 		this.cb.getDrops( drops );
 	}
 
 	@Override
-	public void getNoDrops( World w, int x, int y, int z, ArrayList<ItemStack> drops )
+	public void getNoDrops( World w, int x, int y, int z, List<ItemStack> drops )
 	{
 		this.cb.getNoDrops( drops );
 	}
@@ -334,7 +334,7 @@ public class TileCableBus extends AEBaseTile implements AEMultiTile, ICustomColl
 			}
 		}
 
-		this.getWorldObj().setBlock( this.xCoord, this.yCoord, this.zCoord, Platform.AIR );
+		this.getWorldObj().setBlock( this.xCoord, this.yCoord, this.zCoord, Platform.AIR_BLOCK );
 	}	@Override
 	public void addCollidingBlockToList( World w, int x, int y, int z, AxisAlignedBB bb, List<AxisAlignedBB> out, Entity e )
 	{

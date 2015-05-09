@@ -19,7 +19,7 @@
 package appeng.integration.modules.NEIHelpers;
 
 
-import java.awt.*;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -198,7 +198,7 @@ public class NEIAEShapedRecipeHandler extends TemplateRecipeHandler
 	public class CachedShapedRecipe extends TemplateRecipeHandler.CachedRecipe
 	{
 
-		public final ArrayList<PositionedStack> ingredients;
+		public final List<PositionedStack> ingredients;
 		public final PositionedStack result;
 
 		public CachedShapedRecipe( ShapedRecipe recipe )

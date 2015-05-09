@@ -83,6 +83,11 @@ public final class AEBlockFeatureHandler implements IFeatureHandler
 			// Bypass the forge magic with null to register our own itemblock later.
 			GameRegistry.registerBlock( this.featured, null, registryName );
 			GameRegistry.registerItem( this.definition.maybeItem().get(), registryName );
+
+			if( !this.featured.toString().equals( "BlockCableBus" ) )
+			{
+				GameRegistry.registerTileEntity( this.featured.getTileEntityClass(), this.featured.toString() );
+			}
 		}
 	}
 }

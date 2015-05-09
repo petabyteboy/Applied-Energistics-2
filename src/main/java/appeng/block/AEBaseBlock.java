@@ -22,7 +22,11 @@ package appeng.block;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+
 import javax.annotation.Nullable;
+
+import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -49,13 +53,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
-import com.google.common.base.Optional;
-import com.google.common.collect.Lists;
 
 import appeng.api.implementations.items.IMemoryCard;
 import appeng.api.implementations.items.MemoryCardMessages;
@@ -102,9 +102,9 @@ public class AEBaseBlock extends BlockContainer implements IAEFeature
 	@Nullable
 	private Class<? extends TileEntity> tileEntityType = null;
 
-	protected AEBaseBlock( Class<? extends AEBaseBlock> c, Material mat )
+	protected AEBaseBlock( Material mat )
 	{
-		this( c, mat, Optional.<String>absent() );
+		this( mat, Optional.<String>absent() );
 		this.setLightOpacity( 255 );
 		this.setLightLevel( 0 );
 		this.setHardness( 2.2F );
@@ -112,7 +112,7 @@ public class AEBaseBlock extends BlockContainer implements IAEFeature
 		this.setHarvestLevel( "pickaxe", 0 );
 	}
 
-	protected AEBaseBlock( Class<?> c, Material mat, Optional<String> subName )
+	protected AEBaseBlock( Material mat, Optional<String> subName )
 	{
 		super( mat );
 
@@ -133,7 +133,7 @@ public class AEBaseBlock extends BlockContainer implements IAEFeature
 			this.setStepSound( Block.soundTypeMetal );
 		}
 
-		this.featureFullName = new FeatureNameExtractor( c, subName ).get();
+		this.featureFullName = new FeatureNameExtractor( this.getClass(), subName ).get();
 		this.featureSubName = subName;
 	}
 
@@ -197,7 +197,6 @@ public class AEBaseBlock extends BlockContainer implements IAEFeature
 		this.tileEntityType = c;
 
 		AEBaseTile.registerTileItem( c, new ItemStackSrc( this, 0 ) );
-		GameRegistry.registerTileEntity( this.tileEntityType, this.featureFullName );
 		this.isInventory = IInventory.class.isAssignableFrom( c );
 		this.setTileProvider( this.hasBlockTileEntity() );
 	}
@@ -629,7 +628,7 @@ public class AEBaseBlock extends BlockContainer implements IAEFeature
 
 		if( this.hasBlockTileEntity() )
 		{
-			rotatable = (AEBaseTile) this.getTileEntity( w, x, y, z );
+			rotatable = (IOrientable) this.getTileEntity( w, x, y, z );
 		}
 		else if( this instanceof IOrientableBlock )
 		{
@@ -718,7 +717,7 @@ public class AEBaseBlock extends BlockContainer implements IAEFeature
 	}
 
 	@SideOnly( Side.CLIENT )
-	private FlippableIcon optionalIcon( IIconRegister ir, String Name, IIcon substitute )
+	private FlippableIcon optionalIcon( IIconRegister ir, String name, IIcon substitute )
 	{
 		// if the input is an flippable IIcon find the original.
 		while( substitute instanceof FlippableIcon )
@@ -730,13 +729,13 @@ public class AEBaseBlock extends BlockContainer implements IAEFeature
 		{
 			try
 			{
-				ResourceLocation resLoc = new ResourceLocation( Name );
+				ResourceLocation resLoc = new ResourceLocation( name );
 				resLoc = new ResourceLocation( resLoc.getResourceDomain(), String.format( "%s/%s%s", "textures/blocks", resLoc.getResourcePath(), ".png" ) );
 
 				IResource res = Minecraft.getMinecraft().getResourceManager().getResource( resLoc );
 				if( res != null )
 				{
-					return new FlippableIcon( ir.registerIcon( Name ) );
+					return new FlippableIcon( ir.registerIcon( name ) );
 				}
 			}
 			catch( Throwable e )
@@ -745,7 +744,7 @@ public class AEBaseBlock extends BlockContainer implements IAEFeature
 			}
 		}
 
-		return new FlippableIcon( ir.registerIcon( Name ) );
+		return new FlippableIcon( ir.registerIcon( name ) );
 	}
 
 	@SideOnly( Side.CLIENT )
@@ -760,7 +759,7 @@ public class AEBaseBlock extends BlockContainer implements IAEFeature
 
 		if( this.hasBlockTileEntity() )
 		{
-			ori = (AEBaseTile) this.getTileEntity( w, x, y, z );
+			ori = (IOrientable) this.getTileEntity( w, x, y, z );
 		}
 		else if( this instanceof IOrientableBlock )
 		{

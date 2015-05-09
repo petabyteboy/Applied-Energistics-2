@@ -22,6 +22,9 @@ package appeng.tile.misc;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -33,8 +36,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import com.google.common.collect.ImmutableList;
 
 import appeng.api.util.AEColor;
 import appeng.helpers.Splotch;
@@ -50,7 +51,7 @@ public class TilePaint extends AEBaseTile
 	static final int LIGHT_PER_DOT = 12;
 
 	int isLit = 0;
-	ArrayList<Splotch> dots = null;
+	List<Splotch> dots = null;
 
 	@TileEvent( TileEventType.WORLD_NBT_WRITE )
 	public void writeToNBT_TilePaint( NBTTagCompound data )

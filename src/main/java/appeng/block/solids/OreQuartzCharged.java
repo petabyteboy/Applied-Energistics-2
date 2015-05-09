@@ -20,6 +20,7 @@ package appeng.block.solids;
 
 
 import java.util.Random;
+
 import javax.annotation.Nullable;
 
 import net.minecraft.client.Minecraft;
@@ -42,7 +43,6 @@ public class OreQuartzCharged extends OreQuartz
 
 	public OreQuartzCharged()
 	{
-		super( OreQuartzCharged.class );
 		this.setBoostBrightnessLow( 2 );
 		this.setBoostBrightnessHigh( 5 );
 	}

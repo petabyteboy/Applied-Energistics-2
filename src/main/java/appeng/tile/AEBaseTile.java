@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -479,7 +480,7 @@ public class AEBaseTile extends TileEntity implements IOrientable, ICommonTile, 
 	 * @param drops drops of tile entity
 	 */
 	@Override
-	public void getDrops( World w, int x, int y, int z, ArrayList<ItemStack> drops )
+	public void getDrops( World w, int x, int y, int z, List<ItemStack> drops )
 	{
 		if( this instanceof IInventory )
 		{
@@ -496,7 +497,7 @@ public class AEBaseTile extends TileEntity implements IOrientable, ICommonTile, 
 		}
 	}
 
-	public void getNoDrops( World w, int x, int y, int z, ArrayList<ItemStack> drops )
+	public void getNoDrops( World w, int x, int y, int z, List<ItemStack> drops )
 	{
 
 	}

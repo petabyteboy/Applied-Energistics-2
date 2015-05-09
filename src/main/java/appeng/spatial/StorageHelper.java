@@ -239,12 +239,12 @@ public class StorageHelper
 
 		for( WorldCoord wc : cDst.updates )
 		{
-			cDst.world.notifyBlockOfNeighborChange( wc.x, wc.y, wc.z, Platform.AIR );
+			cDst.world.notifyBlockOfNeighborChange( wc.x, wc.y, wc.z, Platform.AIR_BLOCK );
 		}
 
 		for( WorldCoord wc : cSrc.updates )
 		{
-			cSrc.world.notifyBlockOfNeighborChange( wc.x, wc.y, wc.z, Platform.AIR );
+			cSrc.world.notifyBlockOfNeighborChange( wc.x, wc.y, wc.z, Platform.AIR_BLOCK );
 		}
 
 		this.transverseEdges( x - 1, y - 1, z - 1, x + scaleX + 1, y + scaleY + 1, z + scaleZ + 1, new TriggerUpdates( src ) );
@@ -276,7 +276,7 @@ public class StorageHelper
 		public void visit( int x, int y, int z )
 		{
 			Block blk = this.dst.getBlock( x, y, z );
-			blk.onNeighborBlockChange( this.dst, x, y, z, Platform.AIR );
+			blk.onNeighborBlockChange( this.dst, x, y, z, Platform.AIR_BLOCK );
 		}
 	}
 
@@ -314,12 +314,12 @@ public class StorageHelper
 		final int yOff;
 		final int zOff;
 
-		TelDestination( World _dim, AxisAlignedBB srcBox, double _x, double _y, double _z, int tileX, int tileY, int tileZ )
+		TelDestination( World dimension, AxisAlignedBB srcBox, double x, double y, double z, int tileX, int tileY, int tileZ )
 		{
-			this.dim = _dim;
-			this.x = Math.min( srcBox.maxX - 0.5, Math.max( srcBox.minX + 0.5, _x + tileX ) );
-			this.y = Math.min( srcBox.maxY - 0.5, Math.max( srcBox.minY + 0.5, _y + tileY ) );
-			this.z = Math.min( srcBox.maxZ - 0.5, Math.max( srcBox.minZ + 0.5, _z + tileZ ) );
+			this.dim = dimension;
+			this.x = Math.min( srcBox.maxX - 0.5, Math.max( srcBox.minX + 0.5, x + tileX ) );
+			this.y = Math.min( srcBox.maxY - 0.5, Math.max( srcBox.minY + 0.5, y + tileY ) );
+			this.z = Math.min( srcBox.maxZ - 0.5, Math.max( srcBox.minZ + 0.5, z + tileZ ) );
 			this.xOff = tileX;
 			this.yOff = tileY;
 			this.zOff = tileZ;

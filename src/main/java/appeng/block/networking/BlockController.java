@@ -37,14 +37,14 @@ public class BlockController extends AEBaseBlock
 
 	public BlockController()
 	{
-		super( BlockController.class, Material.iron );
+		super( Material.iron );
 		this.setTileEntity( TileController.class );
 		this.setHardness( 6 );
 		this.setFeature( EnumSet.of( AEFeature.Channels ) );
 	}
 
 	@Override
-	public void onNeighborBlockChange( World w, int x, int y, int z, Block id_junk )
+	public void onNeighborBlockChange( World w, int x, int y, int z, Block neighborBlock )
 	{
 		TileController tc = this.getTileEntity( w, x, y, z );
 		if( tc != null )

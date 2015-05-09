@@ -65,7 +65,7 @@ public class StandardWorld implements IMeteoriteWorld
 		{
 			return this.w.getBlock( x, y, z );
 		}
-		return Platform.AIR;
+		return Platform.AIR_BLOCK;
 	}
 
 	@Override
@@ -104,11 +104,11 @@ public class StandardWorld implements IMeteoriteWorld
 	}
 
 	@Override
-	public void setBlock( int x, int y, int z, Block blk, int metadata, int flags )
+	public void setBlock( int x, int y, int z, Block block, int meta, int flags )
 	{
 		if( this.range( x, y, z ) )
 		{
-			this.w.setBlock( x, y, z, blk, metadata, flags );
+			this.w.setBlock( x, y, z, block, meta, flags );
 		}
 	}
 
