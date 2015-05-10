@@ -22,16 +22,18 @@ package appeng.block;
 import java.util.EnumSet;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
 import appeng.core.features.AEFeature;
 import appeng.core.features.IAEFeature;
 import appeng.core.features.IFeatureHandler;
 import appeng.core.features.SlabBlockFeatureHandler;
-
-import com.google.common.base.Optional;
 
 
 public class AEBaseSlabBlock extends BlockSlab implements IAEFeature
@@ -102,12 +104,24 @@ public class AEBaseSlabBlock extends BlockSlab implements IAEFeature
 	@Override
 	public Item getItemDropped(int meta, Random rand, int fortune)
 	{
-	    return Item.getItemFromBlock(this);
+	    return Item.getItemFromBlock(this.slabs);
 	}
 
 	@Override
 	public int quantityDropped(int meta, int fortune, Random random)
 	{
 	    return this.field_150004_a ? 2 : 1;
+	}
+
+	@Override
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
+	{
+	    Block block = world.getBlock(x, y, z);
+
+	    if (block == null) return null;
+	    if (block == this.dSlabs) block = this.slabs;
+
+	    int meta = world.getBlockMetadata(x, y, z) & 7;
+	    return new ItemStack(block, 1, meta);
 	}
 }
