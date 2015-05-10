@@ -21,8 +21,10 @@ package appeng.core.features;
 
 import java.util.EnumSet;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import appeng.api.definitions.IBlockDefinition;
+import appeng.block.AEBaseItemBlockSlab;
 import appeng.block.AEBaseSlabBlock;
 import appeng.core.CreativeTab;
 
@@ -38,12 +40,11 @@ public class SlabBlockFeatureHandler implements IFeatureHandler
 	private final boolean enabled;
 	private final BlockDefinition definition;
 
-	public SlabBlockFeatureHandler( EnumSet<AEFeature> features, AEBaseSlabBlock slabs, Optional<String> subName )
+	public SlabBlockFeatureHandler( EnumSet<AEFeature> features, AEBaseSlabBlock slabs )
 	{
 		final ActivityState state = new FeaturedActiveChecker( features ).getActivityState();
-
 		this.slabs = slabs;
-		this.extractor = new FeatureNameExtractor( slabs.getClass(), subName );
+		this.extractor = new FeatureNameExtractor( slabs.getClass(), Optional.<String>absent());
 		this.enabled = state == ActivityState.Enabled;
 		this.definition = new BlockDefinition( slabs, state );
 	}
@@ -65,11 +66,9 @@ public class SlabBlockFeatureHandler implements IFeatureHandler
 	{
 		if( this.enabled )
 		{
-			String slabName = this.extractor.get();
-
-			this.slabs.setBlockName( "appliedenergistics2." + slabName );
-			this.slabs.setCreativeTab( CreativeTab.instance );
-			GameRegistry.registerBlock( this.slabs, "tile." + slabName );
+			this.slabs.slabs.setCreativeTab( CreativeTab.instance );
+			GameRegistry.registerBlock( slabs.slabs, AEBaseItemBlockSlab.class, "tile." + slabs.name, slabs.slabs, slabs.dSlabs, false);
+			GameRegistry.registerBlock( slabs.dSlabs, AEBaseItemBlockSlab.class, "tile." + slabs.name + ".double", slabs.slabs, slabs.dSlabs, true);
 		}
 	}
 }

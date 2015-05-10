@@ -19,14 +19,14 @@
 package appeng.core.api.definitions;
 
 
+import java.util.EnumSet;
 import java.util.Set;
-
-import com.google.common.collect.ImmutableSet;
 
 import appeng.api.definitions.IBlockDefinition;
 import appeng.api.definitions.IBlocks;
 import appeng.api.definitions.ITileDefinition;
 import appeng.api.util.IOrientableBlock;
+import appeng.block.AEBaseSlabBlock;
 import appeng.block.crafting.BlockCraftingMonitor;
 import appeng.block.crafting.BlockCraftingStorage;
 import appeng.block.crafting.BlockCraftingUnit;
@@ -55,14 +55,6 @@ import appeng.block.networking.BlockEnergyCell;
 import appeng.block.networking.BlockWireless;
 import appeng.block.qnb.BlockQuantumLinkChamber;
 import appeng.block.qnb.BlockQuantumRing;
-import appeng.block.slab.ChiseledQuartzSlabBlock;
-import appeng.block.slab.FluixSlabBlock;
-import appeng.block.slab.QuartzPillarSlabBlock;
-import appeng.block.slab.QuartzSlabBlock;
-import appeng.block.slab.SkyStoneBlockSlabBlock;
-import appeng.block.slab.SkyStoneBrickSlabBlock;
-import appeng.block.slab.SkyStoneSlabBlock;
-import appeng.block.slab.SkyStoneSmallBrickSlabBlock;
 import appeng.block.solids.BlockFluix;
 import appeng.block.solids.BlockQuartz;
 import appeng.block.solids.BlockQuartzChiseled;
@@ -87,11 +79,14 @@ import appeng.block.storage.BlockChest;
 import appeng.block.storage.BlockDrive;
 import appeng.block.storage.BlockIOPort;
 import appeng.block.storage.BlockSkyChest;
+import appeng.core.features.AEFeature;
 import appeng.core.features.WrappedDamageItemDefinition;
 import appeng.debug.BlockChunkloader;
 import appeng.debug.BlockCubeGenerator;
 import appeng.debug.BlockItemGen;
 import appeng.debug.BlockPhantomNode;
+
+import com.google.common.collect.ImmutableSet;
 
 
 /**
@@ -246,18 +241,14 @@ public final class ApiBlocks implements IBlocks
 
 		this.quartzPillarStair = constructor.registerBlockDefinition( new QuartzPillarStairBlock( quartzPillar ) );
 
-		this.skyStoneSlab = constructor.registerBlockDefinition( new SkyStoneSlabBlock( skyStone, 0 ) );
-		this.skyStoneBlockSlab = constructor.registerBlockDefinition( new SkyStoneBlockSlabBlock( skyStone, 1 ) );
-		this.skyStoneBrickSlab = constructor.registerBlockDefinition( new SkyStoneBrickSlabBlock( skyStone, 2 ) );
-		this.skyStoneSmallBrickSlab = constructor.registerBlockDefinition( new SkyStoneSmallBrickSlabBlock( skyStone, 3 ) );
-
-		this.fluixSlab = constructor.registerBlockDefinition( new FluixSlabBlock( fluixBlock ) );
-
-		this.quartzSlab = constructor.registerBlockDefinition( new QuartzSlabBlock( quartzBlock ) );
-
-		this.chiseledQuartzSlab = constructor.registerBlockDefinition( new ChiseledQuartzSlabBlock( chiseldQuartz ) );
-
-		this.quartzPillarSlab = constructor.registerBlockDefinition( new QuartzPillarSlabBlock( quartzPillar ) );
+		this.skyStoneSlab = constructor.registerBlockDefinition( new AEBaseSlabBlock( skyStone, 0, EnumSet.of(AEFeature.DecorativeQuartzBlocks), false, "SkyStoneSlabBlock" ) );
+		this.skyStoneBlockSlab = constructor.registerBlockDefinition( new AEBaseSlabBlock( skyStone, 1, EnumSet.of(AEFeature.DecorativeQuartzBlocks), false, "SkyStoneBlockSlabBlock" ) );
+		this.skyStoneBrickSlab = constructor.registerBlockDefinition( new AEBaseSlabBlock( skyStone, 2, EnumSet.of(AEFeature.DecorativeQuartzBlocks), false, "SkyStoneBrickSlabBlock" ) );
+		this.skyStoneSmallBrickSlab = constructor.registerBlockDefinition( new AEBaseSlabBlock( skyStone, 3, EnumSet.of(AEFeature.DecorativeQuartzBlocks), false, "SkyStoneSmallBrickSlabBlock" ) );
+		this.fluixSlab = constructor.registerBlockDefinition( new AEBaseSlabBlock( fluixBlock, 0, EnumSet.of(AEFeature.DecorativeQuartzBlocks), false, "FluixSlabBlock" ) );
+		this.quartzSlab = constructor.registerBlockDefinition( new AEBaseSlabBlock( quartzBlock, 0, EnumSet.of(AEFeature.DecorativeQuartzBlocks), false, "QuartzSlabBlock" ) );
+		this.chiseledQuartzSlab = constructor.registerBlockDefinition( new AEBaseSlabBlock( chiseldQuartz, 0, EnumSet.of(AEFeature.DecorativeQuartzBlocks), false, "ChiseledQuartzSlabBlock" ) );;
+		this.quartzPillarSlab = constructor.registerBlockDefinition( new AEBaseSlabBlock( quartzPillar, 0, EnumSet.of(AEFeature.DecorativeQuartzBlocks), false, "QuartzPillarSlabBlock" ) );
 
 		this.itemGen = constructor.registerBlockDefinition( new BlockItemGen() );
 		this.chunkLoader = constructor.registerBlockDefinition( new BlockChunkloader() );

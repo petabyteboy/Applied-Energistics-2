@@ -20,8 +20,11 @@ package appeng.block;
 
 
 import java.util.EnumSet;
+import java.util.Random;
 
 import net.minecraft.block.BlockSlab;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 import appeng.core.features.AEFeature;
 import appeng.core.features.IAEFeature;
@@ -31,22 +34,42 @@ import appeng.core.features.SlabBlockFeatureHandler;
 import com.google.common.base.Optional;
 
 
-public abstract class AEBaseSlabBlock extends BlockSlab implements IAEFeature
+public class AEBaseSlabBlock extends BlockSlab implements IAEFeature
 {
 	private final IFeatureHandler features;
 	public AEBaseBlock block;
 	public int meta;
+	public boolean isDoubleSlab;
+	public AEBaseSlabBlock slabs;
+	public AEBaseSlabBlock dSlabs;
+	public final String name;
 
-	protected AEBaseSlabBlock( AEBaseBlock block, int meta, EnumSet<AEFeature> features )
+	public AEBaseSlabBlock( AEBaseBlock block, int meta, EnumSet<AEFeature> features, boolean isDoubleSlab, String name )
 	{
-        super( false, block.getMaterial() );
-		this.features = new SlabBlockFeatureHandler( features, this, Optional.<String>absent() );
+        super( isDoubleSlab, block.getMaterial() );
 		this.block = block;
 		this.meta = meta;
+		this.name = name;
+		this.isDoubleSlab = isDoubleSlab;
+		this.setBlockName( "appliedenergistics2." + name );
         this.setHardness( block.getBlockHardness( null, 0, 0, 0 ) );
         this.setResistance( block.getExplosionResistance( null ) * 5.0F / 3.0F );
         this.setStepSound( block.stepSound );
-		this.setLightOpacity( 0 );
+        this.useNeighborBrightness = true;
+		if (!isDoubleSlab)
+		{
+			this.dSlabs = new AEBaseSlabBlock( block, meta, features, true, name + ".double" ).setSlabs(this);
+			this.slabs = this;
+		} else {
+			this.dSlabs = this;
+		}
+		this.features = isDoubleSlab ? new SlabBlockFeatureHandler( features, this ) : new SlabBlockFeatureHandler( features, this );
+	}
+
+	public AEBaseSlabBlock setSlabs(AEBaseSlabBlock slabs)
+	{
+		this.slabs = slabs;
+		return this;
 	}
 
 	@Override
@@ -71,5 +94,20 @@ public abstract class AEBaseSlabBlock extends BlockSlab implements IAEFeature
 	public String func_150002_b(int p_150002_1_)
 	{
 		return this.getUnlocalizedName();
+	}
+
+	@Override
+	public void registerBlockIcons(IIconRegister reg) { }
+
+	@Override
+	public Item getItemDropped(int meta, Random rand, int fortune)
+	{
+	    return Item.getItemFromBlock(this);
+	}
+
+	@Override
+	public int quantityDropped(int meta, int fortune, Random random)
+	{
+	    return this.field_150004_a ? 2 : 1;
 	}
 }

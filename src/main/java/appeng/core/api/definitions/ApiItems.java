@@ -98,7 +98,6 @@ public final class ApiItems implements IItems
 
 	private final IItemDefinition facade;
 	private final IItemDefinition crystalSeed;
-//	private final IItemDefinition fluixSlab;
 
 	// rv1
 	private final IItemDefinition encodedPattern;
@@ -155,7 +154,6 @@ public final class ApiItems implements IItems
 
 		this.facade = constructor.registerItemDefinition( new ItemFacade() );
 		this.crystalSeed = constructor.registerItemDefinition( new ItemCrystalSeed() );
-//		this.fluixSlab = constructor.registerItemDefinition( new AEItemSlab((AEBaseSlabBlock) AEApi.instance().definitions().blocks().fluixSlab().maybeBlock().get()) );
 
 		// rv1
 		this.encodedPattern = constructor.registerItemDefinition( new ItemEncodedPattern() );
