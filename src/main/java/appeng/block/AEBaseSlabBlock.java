@@ -58,9 +58,9 @@ public class AEBaseSlabBlock extends BlockSlab implements IAEFeature
         this.setResistance( block.getExplosionResistance( null ) * 5.0F / 3.0F );
         this.setStepSound( block.stepSound );
         this.useNeighborBrightness = true;
-		if (!isDoubleSlab)
+		if ( !isDoubleSlab )
 		{
-			this.dSlabs = new AEBaseSlabBlock( block, meta, features, true, name + ".double" ).setSlabs(this);
+			this.dSlabs = new AEBaseSlabBlock( block, meta, features, true, name + ".double" ).setSlabs( this );
 			this.slabs = this;
 		} else {
 			this.dSlabs = this;
@@ -87,7 +87,7 @@ public class AEBaseSlabBlock extends BlockSlab implements IAEFeature
 	}
 
 	@Override
-	public IIcon getIcon(int dir, int meta)
+	public IIcon getIcon( int dir, int meta )
 	{
 		return block.getIcon( dir, this.meta );
 	}
@@ -104,7 +104,7 @@ public class AEBaseSlabBlock extends BlockSlab implements IAEFeature
 	@Override
 	public Item getItemDropped(int meta, Random rand, int fortune)
 	{
-	    return Item.getItemFromBlock(this.slabs);
+	    return Item.getItemFromBlock( this.slabs );
 	}
 
 	@Override
@@ -118,10 +118,10 @@ public class AEBaseSlabBlock extends BlockSlab implements IAEFeature
 	{
 	    Block block = world.getBlock(x, y, z);
 
-	    if (block == null) return null;
-	    if (block == this.dSlabs) block = this.slabs;
+	    if ( block == null ) return null;
+	    if ( block == this.dSlabs ) block = this.slabs;
 
-	    int meta = world.getBlockMetadata(x, y, z) & 7;
-	    return new ItemStack(block, 1, meta);
+	    int meta = world.getBlockMetadata( x, y, z ) & 7;
+	    return new ItemStack( block, 1, meta );
 	}
 }
