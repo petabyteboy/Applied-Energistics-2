@@ -24,12 +24,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
 import javax.annotation.Nonnull;
 
 import io.netty.buffer.ByteBuf;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -37,6 +39,7 @@ import net.minecraftforge.fluids.FluidStack;
 import appeng.api.config.FuzzyMode;
 import appeng.api.storage.StorageChannel;
 import appeng.api.storage.data.IAEFluidStack;
+import appeng.api.storage.data.IAEStack;
 import appeng.api.storage.data.IAETagCompound;
 import appeng.util.Platform;
 
@@ -100,7 +103,7 @@ public final class AEFluidStack extends AEStack<IAEFluidStack> implements IAEFlu
 		}
 		if( a instanceof AEFluidStack )
 		{
-			( (AEFluidStack) a ).copy();
+			( (IAEStack<IAEFluidStack>) a ).copy();
 		}
 		if( a instanceof FluidStack )
 		{
@@ -113,8 +116,8 @@ public final class AEFluidStack extends AEStack<IAEFluidStack> implements IAEFlu
 	{
 		byte mask = data.readByte();
 		// byte PriorityType = (byte) (mask & 0x03);
-		byte StackType = (byte) ( ( mask & 0x0C ) >> 2 );
-		byte CountReqType = (byte) ( ( mask & 0x30 ) >> 4 );
+		byte stackType = (byte) ( ( mask & 0x0C ) >> 2 );
+		byte countReqType = (byte) ( ( mask & 0x30 ) >> 4 );
 		boolean isCraftable = ( mask & 0x40 ) > 0;
 		boolean hasTagCompound = ( mask & 0x80 ) > 0;
 
@@ -140,8 +143,8 @@ public final class AEFluidStack extends AEStack<IAEFluidStack> implements IAEFlu
 		}
 
 		// long priority = getPacketValue( PriorityType, data );
-		long stackSize = getPacketValue( StackType, data );
-		long countRequestable = getPacketValue( CountReqType, data );
+		long stackSize = getPacketValue( stackType, data );
+		long countRequestable = getPacketValue( countReqType, data );
 
 		FluidStack fluidStack = FluidStack.loadFluidStackFromNBT( d );
 		if( fluidStack == null )
@@ -214,7 +217,7 @@ public final class AEFluidStack extends AEStack<IAEFluidStack> implements IAEFlu
 
 		if( this.tagCompound != null )
 		{
-			i.setTag( "tag", (NBTTagCompound) this.tagCompound );
+			i.setTag( "tag", (NBTBase) this.tagCompound );
 		}
 		else
 		{

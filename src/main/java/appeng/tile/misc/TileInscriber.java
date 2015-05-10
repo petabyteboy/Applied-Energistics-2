@@ -20,10 +20,12 @@ package appeng.tile.misc;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+
 import javax.annotation.Nullable;
+
+import com.google.common.collect.Lists;
 
 import io.netty.buffer.ByteBuf;
 
@@ -32,8 +34,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import com.google.common.collect.Lists;
 
 import appeng.api.AEApi;
 import appeng.api.config.Actionable;
@@ -194,7 +194,7 @@ public class TileInscriber extends AENetworkPowerTile implements IGridTickable, 
 	}
 
 	@Override
-	public void getDrops( World w, int x, int y, int z, ArrayList<ItemStack> drops )
+	public void getDrops( World w, int x, int y, int z, List<ItemStack> drops )
 	{
 		super.getDrops( w, x, y, z, drops );
 
@@ -418,7 +418,7 @@ public class TileInscriber extends AENetworkPowerTile implements IGridTickable, 
 	}
 
 	@Override
-	public TickRateModulation tickingRequest( IGridNode node, int TicksSinceLastCall )
+	public TickRateModulation tickingRequest( IGridNode node, int ticksSinceLastCall )
 	{
 		if( this.smash )
 		{
@@ -482,7 +482,7 @@ public class TileInscriber extends AENetworkPowerTile implements IGridTickable, 
 					}
 					else
 					{
-						this.processingTime += TicksSinceLastCall * speedFactor;
+						this.processingTime += ticksSinceLastCall * speedFactor;
 					}
 				}
 			}

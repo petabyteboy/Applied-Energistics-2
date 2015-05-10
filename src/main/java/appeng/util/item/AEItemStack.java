@@ -26,6 +26,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.List;
+
 import javax.annotation.Nullable;
 
 import io.netty.buffer.ByteBuf;
@@ -147,8 +148,8 @@ public final class AEItemStack extends AEStack<IAEItemStack> implements IAEItemS
 	{
 		byte mask = data.readByte();
 		// byte PriorityType = (byte) (mask & 0x03);
-		byte StackType = (byte) ( ( mask & 0x0C ) >> 2 );
-		byte CountReqType = (byte) ( ( mask & 0x30 ) >> 4 );
+		byte stackType = (byte) ( ( mask & 0x0C ) >> 2 );
+		byte countReqType = (byte) ( ( mask & 0x30 ) >> 4 );
 		boolean isCraftable = ( mask & 0x40 ) > 0;
 		boolean hasTagCompound = ( mask & 0x80 ) > 0;
 
@@ -171,8 +172,8 @@ public final class AEItemStack extends AEStack<IAEItemStack> implements IAEItemS
 		}
 
 		// long priority = getPacketValue( PriorityType, data );
-		long stackSize = getPacketValue( StackType, data );
-		long countRequestable = getPacketValue( CountReqType, data );
+		long stackSize = getPacketValue( stackType, data );
+		long countRequestable = getPacketValue( countReqType, data );
 
 		ItemStack itemstack = ItemStack.loadItemStackFromNBT( d );
 		if( itemstack == null )
@@ -259,7 +260,7 @@ public final class AEItemStack extends AEStack<IAEItemStack> implements IAEItemS
 	}
 
 	@Override
-	public boolean fuzzyComparison( Object st, FuzzyMode Mode )
+	public boolean fuzzyComparison( Object st, FuzzyMode mode )
 	{
 		if( st instanceof IAEItemStack )
 		{
@@ -279,38 +280,38 @@ public final class AEItemStack extends AEStack<IAEItemStack> implements IAEItemS
 
 					try
 					{
-						if( Mode == FuzzyMode.IGNORE_ALL )
+						if( mode == FuzzyMode.IGNORE_ALL )
 						{
 							return true;
 						}
-						else if( Mode == FuzzyMode.PERCENT_99 )
+						else if( mode == FuzzyMode.PERCENT_99 )
 						{
 							return ( a.getItemDamageForDisplay() > 1 ) == ( b.getItemDamageForDisplay() > 1 );
 						}
 						else
 						{
-							float APercentDamaged = 1.0f - (float) a.getItemDamageForDisplay() / (float) a.getMaxDamage();
-							float BPercentDamaged = 1.0f - (float) b.getItemDamageForDisplay() / (float) b.getMaxDamage();
+							float percentDamageOfA = 1.0f - (float) a.getItemDamageForDisplay() / (float) a.getMaxDamage();
+							float percentDamageOfB = 1.0f - (float) b.getItemDamageForDisplay() / (float) b.getMaxDamage();
 
-							return ( APercentDamaged > Mode.breakPoint ) == ( BPercentDamaged > Mode.breakPoint );
+							return ( percentDamageOfA > mode.breakPoint ) == ( percentDamageOfB > mode.breakPoint );
 						}
 					}
 					catch( Throwable e )
 					{
-						if( Mode == FuzzyMode.IGNORE_ALL )
+						if( mode == FuzzyMode.IGNORE_ALL )
 						{
 							return true;
 						}
-						else if( Mode == FuzzyMode.PERCENT_99 )
+						else if( mode == FuzzyMode.PERCENT_99 )
 						{
 							return ( a.getItemDamage() > 1 ) == ( b.getItemDamage() > 1 );
 						}
 						else
 						{
-							float APercentDamaged = (float) a.getItemDamage() / (float) a.getMaxDamage();
-							float BPercentDamaged = (float) b.getItemDamage() / (float) b.getMaxDamage();
+							float percentDamageOfA = (float) a.getItemDamage() / (float) a.getMaxDamage();
+							float percentDamageOfB = (float) b.getItemDamage() / (float) b.getMaxDamage();
 
-							return ( APercentDamaged > Mode.breakPoint ) == ( BPercentDamaged > Mode.breakPoint );
+							return ( percentDamageOfA > mode.breakPoint ) == ( percentDamageOfB > mode.breakPoint );
 						}
 					}
 				}
@@ -333,38 +334,38 @@ public final class AEItemStack extends AEStack<IAEItemStack> implements IAEItemS
 
 					try
 					{
-						if( Mode == FuzzyMode.IGNORE_ALL )
+						if( mode == FuzzyMode.IGNORE_ALL )
 						{
 							return true;
 						}
-						else if( Mode == FuzzyMode.PERCENT_99 )
+						else if( mode == FuzzyMode.PERCENT_99 )
 						{
 							return ( a.getItemDamageForDisplay() > 1 ) == ( o.getItemDamageForDisplay() > 1 );
 						}
 						else
 						{
-							float APercentDamaged = 1.0f - (float) a.getItemDamageForDisplay() / (float) a.getMaxDamage();
-							float BPercentDamaged = 1.0f - (float) o.getItemDamageForDisplay() / (float) o.getMaxDamage();
+							float percentDamageOfA = 1.0f - (float) a.getItemDamageForDisplay() / (float) a.getMaxDamage();
+							float percentDamageOfB = 1.0f - (float) o.getItemDamageForDisplay() / (float) o.getMaxDamage();
 
-							return ( APercentDamaged > Mode.breakPoint ) == ( BPercentDamaged > Mode.breakPoint );
+							return ( percentDamageOfA > mode.breakPoint ) == ( percentDamageOfB > mode.breakPoint );
 						}
 					}
 					catch( Throwable e )
 					{
-						if( Mode == FuzzyMode.IGNORE_ALL )
+						if( mode == FuzzyMode.IGNORE_ALL )
 						{
 							return true;
 						}
-						else if( Mode == FuzzyMode.PERCENT_99 )
+						else if( mode == FuzzyMode.PERCENT_99 )
 						{
 							return ( a.getItemDamage() > 1 ) == ( o.getItemDamage() > 1 );
 						}
 						else
 						{
-							float APercentDamaged = (float) a.getItemDamage() / (float) a.getMaxDamage();
-							float BPercentDamaged = (float) o.getItemDamage() / (float) o.getMaxDamage();
+							float percentDamageOfA = (float) a.getItemDamage() / (float) a.getMaxDamage();
+							float percentDamageOfB = (float) o.getItemDamage() / (float) o.getMaxDamage();
 
-							return ( APercentDamaged > Mode.breakPoint ) == ( BPercentDamaged > Mode.breakPoint );
+							return ( percentDamageOfA > mode.breakPoint ) == ( percentDamageOfB > mode.breakPoint );
 						}
 					}
 				}

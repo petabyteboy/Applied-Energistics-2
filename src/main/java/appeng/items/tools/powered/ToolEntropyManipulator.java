@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Optional;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.BlockTNT;
@@ -41,8 +43,6 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
-
-import com.google.common.base.Optional;
 
 import appeng.api.util.DimensionalCoord;
 import appeng.block.misc.BlockTinyTNT;
@@ -141,7 +141,7 @@ public class ToolEntropyManipulator extends AEBasePoweredItem implements IBlockT
 		}
 		else
 		{
-			w.setBlock( x, y, z, Platform.AIR, 0, 3 );
+			w.setBlock( x, y, z, Platform.AIR_BLOCK, 0, 3 );
 		}
 
 		if( r.Drops != null )
@@ -177,7 +177,7 @@ public class ToolEntropyManipulator extends AEBasePoweredItem implements IBlockT
 		}
 		else
 		{
-			w.setBlock( x, y, z, Platform.AIR, 0, 3 );
+			w.setBlock( x, y, z, Platform.AIR_BLOCK, 0, 3 );
 		}
 
 		if( r.Drops != null )
@@ -266,14 +266,14 @@ public class ToolEntropyManipulator extends AEBasePoweredItem implements IBlockT
 			{
 				if( blockID instanceof BlockTNT )
 				{
-					w.setBlock( x, y, z, Platform.AIR, 0, 3 );
+					w.setBlock( x, y, z, Platform.AIR_BLOCK, 0, 3 );
 					( (BlockTNT) blockID ).func_150114_a( w, x, y, z, 1, p );
 					return true;
 				}
 
 				if( blockID instanceof BlockTinyTNT )
 				{
-					w.setBlock( x, y, z, Platform.AIR, 0, 3 );
+					w.setBlock( x, y, z, Platform.AIR_BLOCK, 0, 3 );
 					( (BlockTinyTNT) blockID ).startFuse( w, x, y, z, p );
 					return true;
 				}
@@ -321,7 +321,7 @@ public class ToolEntropyManipulator extends AEBasePoweredItem implements IBlockT
 
 					if( or.BlockItem == null )
 					{
-						w.setBlock( x, y, z, Platform.AIR, 0, 3 );
+						w.setBlock( x, y, z, Platform.AIR_BLOCK, 0, 3 );
 					}
 					else
 					{

@@ -21,6 +21,7 @@ package appeng.client.render;
 
 import java.nio.FloatBuffer;
 import java.util.EnumSet;
+
 import javax.annotation.Nullable;
 
 import org.lwjgl.BufferUtils;
@@ -70,10 +71,10 @@ public class BaseBlockRender
 		this( false, 20 );
 	}
 
-	public BaseBlockRender( boolean enableTESR, double tileEntitySpecialRendererRange )
+	public BaseBlockRender( boolean enableTESR, double renderDistance )
 	{
 		this.hasTESR = enableTESR;
-		this.renderDistance = tileEntitySpecialRendererRange;
+		this.renderDistance = renderDistance;
 		setOriMap();
 	}
 
@@ -447,7 +448,7 @@ public class BaseBlockRender
 	{
 		if( block.hasBlockTileEntity() )
 		{
-			return (AEBaseTile) block.getTileEntity( w, x, y, z );
+			return (IOrientable) block.getTileEntity( w, x, y, z );
 		}
 		else if( block instanceof IOrientableBlock )
 		{

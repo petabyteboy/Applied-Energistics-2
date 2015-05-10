@@ -21,6 +21,8 @@ package appeng.parts.automation;
 
 import java.util.concurrent.Callable;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -35,8 +37,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
-import com.google.common.collect.Lists;
 
 import appeng.api.config.Actionable;
 import appeng.api.config.PowerMultiplier;
@@ -408,7 +408,7 @@ public class PartAnnihilationPlane extends PartBasicState implements IGridTickab
 						{
 							if( modulate )
 							{
-								w.setBlock( x, y, z, Platform.AIR, 0, 3 );
+								w.setBlock( x, y, z, Platform.AIR_BLOCK, 0, 3 );
 								energy.extractAEPower( total, Actionable.MODULATE, PowerMultiplier.CONFIG );
 
 								final AxisAlignedBB box = AxisAlignedBB.getBoundingBox( x - 0.2, y - 0.2, z - 0.2, x + 1.2, y + 1.2, z + 1.2 );

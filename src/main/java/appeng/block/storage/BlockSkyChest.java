@@ -57,7 +57,7 @@ public class BlockSkyChest extends AEBaseBlock implements ICustomCollision
 
 	public BlockSkyChest()
 	{
-		super( BlockSkyChest.class, Material.rock );
+		super( Material.rock );
 		this.setTileEntity( TileSkyChest.class );
 		this.isOpaque = this.isFullSize = false;
 		this.lightOpacity = 0;
@@ -148,11 +148,11 @@ public class BlockSkyChest extends AEBaseBlock implements ICustomCollision
 			o = sk.getUp();
 		}
 
-		double X = o.offsetX == 0 ? 0.06 : 0.0;
-		double Y = o.offsetY == 0 ? 0.06 : 0.0;
-		double Z = o.offsetZ == 0 ? 0.06 : 0.0;
+		double offsetX = o.offsetX == 0 ? 0.06 : 0.0;
+		double offsetY = o.offsetY == 0 ? 0.06 : 0.0;
+		double offsetZ = o.offsetZ == 0 ? 0.06 : 0.0;
 
-		return Collections.singletonList( AxisAlignedBB.getBoundingBox( Math.max( 0.0, X - o.offsetX * sc ), Math.max( 0.0, Y - o.offsetY * sc ), Math.max( 0.0, Z - o.offsetZ * sc ), Math.min( 1.0, ( 1.0 - X ) - o.offsetX * sc ), Math.min( 1.0, ( 1.0 - Y ) - o.offsetY * sc ), Math.min( 1.0, ( 1.0 - Z ) - o.offsetZ * sc ) ) );
+		return Collections.singletonList( AxisAlignedBB.getBoundingBox( Math.max( 0.0, offsetX - o.offsetX * sc ), Math.max( 0.0, offsetY - o.offsetY * sc ), Math.max( 0.0, offsetZ - o.offsetZ * sc ), Math.min( 1.0, ( 1.0 - offsetX ) - o.offsetX * sc ), Math.min( 1.0, ( 1.0 - offsetY ) - o.offsetY * sc ), Math.min( 1.0, ( 1.0 - offsetZ ) - o.offsetZ * sc ) ) );
 	}
 
 	@Override

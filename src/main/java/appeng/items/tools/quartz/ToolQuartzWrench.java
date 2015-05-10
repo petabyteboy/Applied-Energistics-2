@@ -21,6 +21,8 @@ package appeng.items.tools.quartz;
 
 import java.util.EnumSet;
 
+import com.google.common.base.Optional;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -28,7 +30,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import buildcraft.api.tools.IToolWrench;
-import com.google.common.base.Optional;
 
 import appeng.api.implementations.items.IAEWrench;
 import appeng.api.util.DimensionalCoord;
@@ -65,7 +66,7 @@ public class ToolQuartzWrench extends AEBaseItem implements IAEWrench, IToolWren
 			ForgeDirection mySide = ForgeDirection.getOrientation( side );
 			if( b.rotateBlock( world, x, y, z, mySide ) )
 			{
-				b.onNeighborBlockChange( world, x, y, z, Platform.AIR );
+				b.onNeighborBlockChange( world, x, y, z, Platform.AIR_BLOCK );
 				player.swingItem();
 				return !world.isRemote;
 			}
